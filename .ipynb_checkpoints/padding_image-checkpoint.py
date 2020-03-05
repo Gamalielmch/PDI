@@ -1,4 +1,4 @@
-def padding_image(I,n,type):
+def padding(I,n,type):
     import numpy as np
     # I must be gray scale image 
     # n = number of stacks
@@ -60,28 +60,28 @@ def padding_image(I,n,type):
          #rows bottom
         temp=np.zeros((n[0],sz[1]))
         temp[0:n[0],:]=I[sz[0]-n[0]:sz[0],:]
-        temp=np.flip(temp,1)
+        temp=np.flip(temp,0)
         I=np.vstack((I,temp))
         #rows top
         temp=np.zeros((n[0],sz[1]))
         temp[0:n[0],:]=I[0:n[0],:]
-        temp=np.flip(temp,1)
+        temp=np.flip(temp,0)
         I=np.vstack((temp, I))
         #cols right
         sz=I.shape
         temp=np.zeros((sz[0],n[1]))
-        temp[:,0:n[1]]=I[:,sz[1]-n[1]+1] 
-        temp=np.flip(temp,0)
-        I=np.vstack((I,temp))
+        temp[:,0:n[1]]=I[:,sz[1]-n[1]:sz[1]]
+        temp=np.flip(temp,1)
+        I=np.hstack((I,temp))
         #cols right
         temp=np.zeros((sz[0],n[1]))
-        temp[:,0:n[1]]=I[:,0:n[1]+1] 
-        temp=np.flip(temp,0)
-        I=np.vstack((temp,I))
+        temp[:,0:n[1]]=I[:,0:n[1]] 
+        temp=np.flip(temp,1)
+        I=np.hstack((temp,I))
     return I
 
 
-def removing_image(I,n):
+def remove(I,n):
     import numpy as np
     # I must be gray scale image 
     # if the n size is 2 n[0]=rows-zeros and n[1]=cols-zeros   
